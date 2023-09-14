@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IconButton,
   Avatar,
@@ -36,10 +36,22 @@ import {
   FiChevronDown,
   FiPhoneCall,
 } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsHospital } from "react-icons/bs";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RxAvatar } from "react-icons/rx";
+
+import { useCookies } from "react-cookie";
+// const [cookies] = useCookies("cookie-name");
+// const navigate = useNavigate();
+
+// const [login, setLogin] = useState(false);
+
+// useEffect(() => {
+//   if (cookies.jwt) {
+//     setLogin(true);
+//   }
+// }, []);
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -127,7 +139,16 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const [cookies] = useCookies("cookie-name");
+  const navigate = useNavigate();
+
   const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    if (cookies.jwt) {
+      setLogin(true);
+    }
+  }, []);
 
   return (
     <>
@@ -178,7 +199,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 aria-label="open menu"
                 icon={<FiBell />}
               />
-              {/* <Badge colorScheme="purple">+69 NEW</Badge> */}
             </>
           </Tooltip>
           <Flex alignItems={"center"}>
@@ -186,8 +206,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuButton
                 py={2}
                 onClick={() => {
-                  console.log("clicked");
-                  setLogin(!login);
+                  console.log("clicked1");
                 }}
                 transition="all 0.3s"
                 _focus={{ boxShadow: "none" }}
@@ -196,15 +215,14 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   {!login ? (
                     <Button
                       onClick={() => {
-                        setLogin(!login);
+                        console.log("clicked2");
+                        navigate("/SignUP");
                       }}
                       // leftIcon={<RxAvatar />}
                       colorScheme="pink"
                       variant="solid"
                     >
-                      <Link style={{ textDecoration: "none" }} to={"/SignUP"}>
-                        <Text>Signup</Text>
-                      </Link>
+                      <Text>Signup</Text>
                     </Button>
                   ) : (
                     <>
@@ -232,7 +250,19 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   )}
                 </HStack>
               </MenuButton>
-              <MenuList
+              {login && (
+                <MenuList
+                  bg={useColorModeValue("white", "gray.900")}
+                  borderColor={useColorModeValue("gray.200", "gray.700")}
+                >
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem>Billing</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Sign out</MenuItem>
+                </MenuList>
+              )}
+              {/* <MenuList
                 bg={useColorModeValue("white", "gray.900")}
                 borderColor={useColorModeValue("gray.200", "gray.700")}
               >
@@ -241,7 +271,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 <MenuItem>Billing</MenuItem>
                 <MenuDivider />
                 <MenuItem>Sign out</MenuItem>
-              </MenuList>
+              </MenuList> */}
             </Menu>
           </Flex>
         </HStack>
