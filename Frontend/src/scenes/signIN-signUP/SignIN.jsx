@@ -107,10 +107,10 @@ export default function SimpleCard() {
                       );
                       console.log(data);
                       // throwToast(data);
-                      if (data.status == "success") {
+                      if (data.status === true) {
                         console.log("sign in done");
-                        navigate("/Home"); // Redirect to the LogIN route
-                      } // redirect to LogIN
+                        navigate("/Home"); // Redirect to the home route
+                      } 
                     } catch (error) {
                       console.log(error.message); //
                     }
