@@ -205,25 +205,22 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <Menu>
               <MenuButton
                 py={2}
-                onClick={() => {
-                  console.log("clicked1");
-                }}
                 transition="all 0.3s"
                 _focus={{ boxShadow: "none" }}
               >
                 <HStack>
                   {!login ? (
-                    <Button
-                      onClick={() => {
-                        console.log("clicked2");
-                        navigate("/SignUP");
-                      }}
-                      // leftIcon={<RxAvatar />}
-                      colorScheme="pink"
-                      variant="solid"
-                    >
-                      <Text>Signup</Text>
-                    </Button>
+                    <Link to={"/SignUP"}>
+                      <Button
+                        onClick={() => {
+                          console.log("clicked2");
+                          navigate("/SignUP");
+                        }}
+                        colorScheme="linkedin"
+                      >
+                        Signup
+                      </Button>
+                    </Link>
                   ) : (
                     <>
                       <Avatar

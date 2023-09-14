@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Flex,
   Box,
@@ -15,6 +17,18 @@ import {
 } from "@chakra-ui/react";
 
 export default function SimpleCard() {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [isFormValid, setIsFormValid] = useState(false);
+  useEffect(() => {
+    // Check if all required fields are filled
+    setIsFormValid(userData.email && userData.password);
+  }, [userData]);
+
+  const navigate = useNavigate();
   return (
     <Flex
       minH={"100vh"}
@@ -24,7 +38,7 @@ export default function SimpleCard() {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-        {/* https://selfregistration.sandbox.cowin.gov.in/assets/images/login-screen.svg */}
+          {/* https://selfregistration.sandbox.cowin.gov.in/assets/images/login-screen.svg */}
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
             to access Himachal Pradesh Hospitals
@@ -40,11 +54,29 @@ export default function SimpleCard() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                name="email"
+                onChange={(e) => {
+                  setUserData({
+                    ...userData,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                name="password"
+                onChange={(e) => {
+                  setUserData({
+                    ...userData,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -60,6 +92,31 @@ export default function SimpleCard() {
                 color={"white"}
                 _hover={{
                   bg: "blue.500",
+                }}
+                isDisabled={!isFormValid}
+                onClick={async (e) => {
+                  // Check if the form is valid
+                  if (isFormValid) {
+                    try {
+                      console.log("reactfile msg send");
+                      const { data } = await axios.post(
+                        "http://localhost:5000/user/login",
+                        {
+                          ...userData,
+                        }
+                      );
+                      console.log(data);
+                      // throwToast(data);
+                      if (data.status == "success") {
+                        console.log("sign in done");
+                        navigate("/Home"); // Redirect to the LogIN route
+                      } // redirect to LogIN
+                    } catch (error) {
+                      console.log(error.message); //
+                    }
+                  } else {
+                    // throwToast(data.title, data.description, data.status);
+                  }
                 }}
               >
                 Sign in
