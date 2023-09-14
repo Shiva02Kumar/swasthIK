@@ -36,15 +36,16 @@ export default function SignUP() {
       userData.firstName &&
         userData.email &&
         userData.password &&
-        userData.confirmPassword && userData.password===userData.confirmPassword
+        userData.confirmPassword &&
+        userData.password === userData.confirmPassword
     );
   }, [userData]);
 
-  function throwToast(title, status, message) {
+  function throwToast({ title, status, description }) {
     const toast = useToast();
     return toast({
       title: title,
-      description: message,
+      description: description,
       status: status,
       duration: 9000,
       isClosable: true,
@@ -186,20 +187,15 @@ export default function SignUP() {
                           ...userData,
                         }
                       );
-                      console.log('data');
                       console.log(data);
+                      throwToast(data);
                     } catch (error) {
-                      console.log(error.message); 
+                      console.log(error.message); //
                     }
                   } else {
-                    throwToast(
-                      "Form Incomplete",
-                      "error",
-                      "Please fill in all required fields."
-                    );
+                    // throwToast(data.title, data.description, data.status);
                   }
                 }}
-                // Disable the button when the form is not valid
                 isDisabled={!isFormValid}
               >
                 Sign up

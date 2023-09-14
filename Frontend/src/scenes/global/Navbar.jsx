@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   IconButton,
   Avatar,
@@ -20,7 +21,10 @@ import {
   Tooltip,
   Badge,
   AvatarBadge,
+  Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
+// import {  } from '@chakra-ui/react'
 import {
   FiHome,
   FiTrendingUp,
@@ -35,6 +39,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { BsHospital } from "react-icons/bs";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { RxAvatar } from "react-icons/rx";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -122,6 +127,8 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const [login, setLogin] = useState(false);
+
   return (
     <>
       <Flex
@@ -178,30 +185,51 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <Menu>
               <MenuButton
                 py={2}
+                onClick={() => {
+                  console.log("clicked");
+                  setLogin(!login);
+                }}
                 transition="all 0.3s"
                 _focus={{ boxShadow: "none" }}
               >
                 <HStack>
-                  <Avatar
-                    name="kashsh khera"
-                    bg="teal.300"
-                    src="https://bit.ly/broken-link"
-                  />
+                  {!login ? (
+                    <Button
+                      onClick={() => {
+                        setLogin(!login);
+                      }}
+                      // leftIcon={<RxAvatar />}
+                      colorScheme="pink"
+                      variant="solid"
+                    >
+                      <Link style={{ textDecoration: "none" }} to={"/SignUP"}>
+                        <Text>Signup</Text>
+                      </Link>
+                    </Button>
+                  ) : (
+                    <>
+                      <Avatar
+                        name="kashsh khera"
+                        bg="teal.300"
+                        src="https://bit.ly/broken-link"
+                      />
 
-                  <VStack
-                    display={{ base: "none", md: "flex" }}
-                    alignItems="flex-start"
-                    spacing="1px"
-                    ml="2"
-                  >
-                    <Text fontSize="sm">Kashish Khera </Text>
-                    <Text fontSize="xs" color="gray.600">
-                      Organ extractor
-                    </Text>
-                  </VStack>
-                  <Box display={{ base: "none", md: "flex" }}>
-                    <FiChevronDown />
-                  </Box>
+                      <VStack
+                        display={{ base: "none", md: "flex" }}
+                        alignItems="flex-start"
+                        spacing="1px"
+                        ml="2"
+                      >
+                        <Text fontSize="sm">Kashish Khera </Text>
+                        <Text fontSize="xs" color="gray.600">
+                          Patient
+                        </Text>
+                      </VStack>
+                      <Box display={{ base: "none", md: "flex" }}>
+                        <FiChevronDown />
+                      </Box>
+                    </>
+                  )}
                 </HStack>
               </MenuButton>
               <MenuList
