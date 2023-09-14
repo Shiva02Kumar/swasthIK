@@ -1,0 +1,1 @@
+return predict_disease

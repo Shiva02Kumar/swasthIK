@@ -37,7 +37,7 @@ function App() {
       <Navbar />
       <div style={{ marginLeft }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/Home" />} />
+          <Route path="/" element={<Navigate to="/SignUP" />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/Appointment" element={<Appointment />} />
           <Route path="/LogIN" element={<SignIN />} />
