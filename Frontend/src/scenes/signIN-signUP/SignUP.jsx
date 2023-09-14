@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Flex,
@@ -29,6 +29,7 @@ export default function SignUP() {
     confirmPassword: "",
   });
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if all required fields are filled
@@ -36,15 +37,16 @@ export default function SignUP() {
       userData.firstName &&
         userData.email &&
         userData.password &&
-        userData.confirmPassword && userData.password===userData.confirmPassword
+        userData.confirmPassword &&
+        userData.password === userData.confirmPassword
     );
   }, [userData]);
 
-  function throwToast(title, status, message) {
+  function throwToast({ title, status, description }) {
     const toast = useToast();
     return toast({
       title: title,
-      description: message,
+      description: description,
       status: status,
       duration: 9000,
       isClosable: true,
@@ -179,27 +181,27 @@ export default function SignUP() {
                   // Check if the form is valid
                   if (isFormValid) {
                     try {
-                      console.log("reactfile msg send");
+                      // console.log("reactfile msg send");
                       const { data } = await axios.post(
                         "http://localhost:5000/user/signup",
                         {
                           ...userData,
                         }
                       );
-                      console.log('data');
-                      console.log(data);
+                      // console.log(data);
+                      // throwToast(data);
+                      if (data.status == "success") {
+                        // console.log("routing to login");
+                        // const navigate = useNavigate();
+                        navigate("/LogIN"); // Redirect to the LogIN route
+                      } // redirect to LogIN
                     } catch (error) {
-                      console.log(error.message); 
+                      // console.log(error.message); //
                     }
                   } else {
-                    throwToast(
-                      "Form Incomplete",
-                      "error",
-                      "Please fill in all required fields."
-                    );
+                    // throwToast(data.title, data.description, data.status);
                   }
                 }}
-                // Disable the button when the form is not valid
                 isDisabled={!isFormValid}
               >
                 Sign up

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   IconButton,
   Avatar,
@@ -20,7 +21,10 @@ import {
   Tooltip,
   Badge,
   AvatarBadge,
+  Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
+// import {  } from '@chakra-ui/react'
 import {
   FiHome,
   FiTrendingUp,
@@ -32,9 +36,22 @@ import {
   FiChevronDown,
   FiPhoneCall,
 } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsHospital } from "react-icons/bs";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { RxAvatar } from "react-icons/rx";
+
+import { useCookies } from "react-cookie";
+// const [cookies] = useCookies("cookie-name");
+// const navigate = useNavigate();
+
+// const [login, setLogin] = useState(false);
+
+// useEffect(() => {
+//   if (cookies.jwt) {
+//     setLogin(true);
+//   }
+// }, []);
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -122,6 +139,17 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const [cookies] = useCookies("cookie-name");
+  const navigate = useNavigate();
+
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    if (cookies.jwt) {
+      setLogin(true);
+    }
+  }, []);
+
   return (
     <>
       <Flex
@@ -171,7 +199,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 aria-label="open menu"
                 icon={<FiBell />}
               />
-              {/* <Badge colorScheme="purple">+69 NEW</Badge> */}
             </>
           </Tooltip>
           <Flex alignItems={"center"}>
@@ -182,29 +209,57 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 _focus={{ boxShadow: "none" }}
               >
                 <HStack>
-                  <Avatar
-                    name="kashsh khera"
-                    bg="teal.300"
-                    src="https://bit.ly/broken-link"
-                  />
+                  {!login ? (
+                    <Link to={"/SignUP"}>
+                      <Button
+                        onClick={() => {
+                          console.log("clicked2");
+                          navigate("/SignUP");
+                        }}
+                        colorScheme="linkedin"
+                      >
+                        Signup
+                      </Button>
+                    </Link>
+                  ) : (
+                    <>
+                      <Avatar
+                        name="kashsh khera"
+                        bg="teal.300"
+                        src="https://bit.ly/broken-link"
+                      />
 
-                  <VStack
-                    display={{ base: "none", md: "flex" }}
-                    alignItems="flex-start"
-                    spacing="1px"
-                    ml="2"
-                  >
-                    <Text fontSize="sm">Kashish Khera </Text>
-                    <Text fontSize="xs" color="gray.600">
-                      Organ extractor
-                    </Text>
-                  </VStack>
-                  <Box display={{ base: "none", md: "flex" }}>
-                    <FiChevronDown />
-                  </Box>
+                      <VStack
+                        display={{ base: "none", md: "flex" }}
+                        alignItems="flex-start"
+                        spacing="1px"
+                        ml="2"
+                      >
+                        <Text fontSize="sm">Kashish Khera </Text>
+                        <Text fontSize="xs" color="gray.600">
+                          Patient
+                        </Text>
+                      </VStack>
+                      <Box display={{ base: "none", md: "flex" }}>
+                        <FiChevronDown />
+                      </Box>
+                    </>
+                  )}
                 </HStack>
               </MenuButton>
-              <MenuList
+              {login && (
+                <MenuList
+                  bg={useColorModeValue("white", "gray.900")}
+                  borderColor={useColorModeValue("gray.200", "gray.700")}
+                >
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem>Billing</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Sign out</MenuItem>
+                </MenuList>
+              )}
+              {/* <MenuList
                 bg={useColorModeValue("white", "gray.900")}
                 borderColor={useColorModeValue("gray.200", "gray.700")}
               >
@@ -213,7 +268,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 <MenuItem>Billing</MenuItem>
                 <MenuDivider />
                 <MenuItem>Sign out</MenuItem>
-              </MenuList>
+              </MenuList> */}
             </Menu>
           </Flex>
         </HStack>

@@ -58,10 +58,11 @@ async function login(req, res) {
     try {
         let data = req.body;
         const user = await userModel.login(data.email, data.password);
-        const token = createToken(user._id);
+        let uid = user['_id'];
+        const token = jwt.sign({ payload: uid }, JWT_KEY);
         res.cookie("jwt", token, { httpOnly: false });
         res.status(200).json({ user: user._id, status: true });
-    } catch (err) {
+    } catch (error) {
         console.log(error);
         const errors = handleErrors(error);
         res.json({ errors, created: false });

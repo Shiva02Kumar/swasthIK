@@ -84,7 +84,7 @@ function Map() {
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="we love bear"
+              attribution="swasthIK"
             />
             {markers}
           </MapContainer>

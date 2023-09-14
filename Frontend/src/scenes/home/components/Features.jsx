@@ -61,7 +61,7 @@ export default function Feature() {
           OUR FEATURES
         </Heading>
         <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-          abhi badmaas
+          add details `to decide`
         </Text>
       </Stack>
 
