@@ -35,7 +35,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" \"cd MLmodel && uvicorn main:app --port 6000\" "
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" \"cd MLmodel && uvicorn main:app --port 6000\" ",
+    "start": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" \"cd MLmodel && uvicorn main:app --port 6000\" "
   },
   "author": "",
   "license": "ISC"
