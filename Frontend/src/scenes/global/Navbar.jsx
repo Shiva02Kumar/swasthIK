@@ -142,7 +142,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const [cookies] = useCookies("cookie-name");
   const navigate = useNavigate();
 
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
 
   useEffect(() => {
     if (cookies.jwt) {
