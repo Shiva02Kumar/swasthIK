@@ -5,7 +5,7 @@ const authRouter = require('./routers/authRouter')
 const cookieParser = require('cookie-parser')
 
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://swasthiksih.onrender.com/"],
     method: ['GET', 'POST'],
     credentials: true
 }))
