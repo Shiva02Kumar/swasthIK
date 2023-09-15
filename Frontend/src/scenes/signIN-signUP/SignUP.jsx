@@ -183,7 +183,7 @@ export default function SignUP() {
                     try {
                       // console.log("reactfile msg send");
                       const { data } = await axios.post(
-                        "http://localhost:5000/user/signup",
+                        "https://swasthik.onrender.com/user/signup",
                         {
                           ...userData,
                         }
